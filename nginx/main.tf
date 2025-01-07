@@ -3,10 +3,7 @@ variable "aws_access_key" {}
 variable "aws_secret_key" {}
 variable "region" {}
 variable "private_key" {}
-
-data "aws_security_group" "selected" {
-  id ="sg-068f6a2472c023f3e"
-}
+variable "aws_security_group_instance" {}
 
 terraform {
   required_providers {
@@ -42,7 +39,7 @@ resource "aws_instance" "nginx" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   key_name = var.private_key
-  vpc_security_group_ids  = [data.aws_security_group.selected.id]
+  vpc_security_group_ids  = [var.aws_security_group_instance]
   user_data = <<EOF
 #!/bin/bash
       sudo apt update
