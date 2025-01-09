@@ -3,3 +3,7 @@ sudo dpkg -i puppet7-release-focal.deb
 sudo apt 
 
 sudo apt install puppet-agent
+
+export PATH="/opt/puppetlabs/bin/:$PATH"
+
+puppet --version

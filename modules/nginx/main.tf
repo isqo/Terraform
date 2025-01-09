@@ -47,6 +47,7 @@ resource "aws_instance" "nginx" {
 
   bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/run_nginx.sh)
   echo ${var.puppetserver_private_ip} > /tmp/puppetserver_private_ip
+  bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/setup_puppet_agent.sh)
   EOF
   tags = {
     Name = "nginx"
