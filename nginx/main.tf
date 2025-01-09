@@ -42,13 +42,14 @@ resource "aws_instance" "nginx" {
   vpc_security_group_ids  = [var.aws_security_group_instance]
   user_data = <<EOF
 #!/bin/bash
-      sudo apt update
-      sudo apt install -y nginx
-      sudo systemctl enable nginx
-      sudo systemctl start nginx
+
+  bash <(curl -s https://github.com/isqo/Terraform/blob/e498ca0b6e8707c5c491b61a51340296566dbeea/userdata/run_nginx.sh)
+
   EOF
   tags = {
     Name = "nginx"
+    
+
   }
 }
 

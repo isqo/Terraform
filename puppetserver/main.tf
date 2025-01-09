@@ -43,12 +43,7 @@ resource "aws_instance" "puppetserver" {
   vpc_security_group_ids  = [var.aws_security_group_instance]
   user_data = <<EOF
 #!/bin/bash
-      # wget https://apt.puppet.com/puppet7-release-focal.deb
-      # sudo dpkg -i puppet7-release-focal.deb
-      # sudo apt update
-      # sudo apt-get install puppetserver
-      # sudo service puppetserver start
-      # puppetserver --versio
+    bash <(curl -s https://github.com/isqo/Terraform/blob/77dafe099c55b5706a5a2a9a2542a19aecbf5418/userdata/run_puppetserver.sh
   EOF
   tags = {
     Name = "puppetserver"
