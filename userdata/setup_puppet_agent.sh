@@ -4,8 +4,4 @@ sudo apt update
 
 sudo apt install puppet-agent
 
-export PATH="/opt/puppetlabs/bin/:$PATH"
-
-puppet --version
-
-echo ${var.puppetserver_private_ip} puppet >> /etc/hosts
+echo {{var.puppetserver_private_ip}} puppet >> /etc/hosts
