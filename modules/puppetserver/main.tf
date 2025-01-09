@@ -38,15 +38,18 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "puppetserver" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.medium"
+  instance_type = "t2.large"
   key_name = var.private_key
   vpc_security_group_ids  = [var.aws_security_group_instance]
   user_data = <<EOF
 #!/bin/bash
-    bash <(curl -s https://github.com/isqo/Terraform/blob/77dafe099c55b5706a5a2a9a2542a19aecbf5418/userdata/run_puppetserver.sh
+    bash <(curl -s  https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/run_puppetserver.sh)
   EOF
   tags = {
     Name = "puppetserver"
   }
 }
 
+output "instance_ip_addr" {
+  value = aws_instance.puppetserver.private_ip
+}

@@ -4,6 +4,7 @@ variable "aws_secret_key" {}
 variable "region" {}
 variable "private_key" {}
 variable "aws_security_group_instance" {}
+variable "puppetserver_private_ip" {}
 
 terraform {
   required_providers {
@@ -19,6 +20,7 @@ provider "aws" {
   secret_key = var.aws_secret_key
   region     = var.region
 }
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -43,8 +45,8 @@ resource "aws_instance" "nginx" {
   user_data = <<EOF
 #!/bin/bash
 
-  bash <(curl -s https://github.com/isqo/Terraform/blob/e498ca0b6e8707c5c491b61a51340296566dbeea/userdata/run_nginx.sh)
-
+  bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/run_nginx.sh)
+  echo ${var.puppetserver_private_ip} > /tmp/puppetserver_private_ip
   EOF
   tags = {
     Name = "nginx"
@@ -52,4 +54,3 @@ resource "aws_instance" "nginx" {
 
   }
 }
-
