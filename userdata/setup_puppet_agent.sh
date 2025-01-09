@@ -4,4 +4,6 @@ sudo apt update
 
 sudo apt install puppet-agent
 
-echo {{var.puppetserver_private_ip}} puppet >> /etc/hosts
+echo ${var.puppetserver_private_ip} puppet >> /etc/hosts
+
+sudo puppet --version
