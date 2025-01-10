@@ -44,8 +44,9 @@ resource "aws_instance" "nginx" {
   vpc_security_group_ids  = [var.aws_security_group_instance]
   user_data = <<EOF
 #!/bin/bash
+  bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/setup_puppet_agent.sh)
+  echo "${var.puppetserver_private_ip}" puppet >> /etc/hosts
   bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/run_nginx.sh)
-  bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/setup_puppet_agent.sh 
   EOF
   tags = {
     Name = "nginx"
