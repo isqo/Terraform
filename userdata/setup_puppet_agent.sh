@@ -6,8 +6,8 @@ sudo apt update
 sudo apt install puppet-agent
 
 export PATH=$PATH:/opt/puppetlabs/bin
-sudo puppet --version
+sudo /opt/puppetlabs/bin/puppet --version
 
 echo $(hostname -i) puppet >> /etc/hosts
 
-puppet ssl bootstrapy
+puppet ssl bootstrap
