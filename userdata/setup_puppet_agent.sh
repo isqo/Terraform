@@ -6,3 +6,5 @@ sudo apt install puppet-agent
 sudo puppet --version
 
 echo $(hostname -i) puppet >> /etc/hosts
+
+puppet ssl bootstrap
