@@ -13,5 +13,6 @@ echo $(hostname -i) puppet >> /etc/hosts
 #accept automatic signing
 echo "*" > /etc/puppetlabs/puppet/autosign.conf
 
-sudo apt install ruby-rubygems
+sudo apt --yes install ruby-rubygems
 sudo gem install r10k
+sudo curl https://raw.githubusercontent.com/isqo/control-repo/refs/heads/production/r10k.yaml -o /etc/puppetlabs/puppet/r10k.yaml
