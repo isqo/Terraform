@@ -90,8 +90,44 @@ resource "aws_instance" "agent3" {
   bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/setup_puppet_agent_red_hat.sh)
   EOF
   tags = {
+    Name = "puppetdb"
+  }
+}
+
+resource "aws_instance" "agent5" {
+  ami           = data.aws_ami.redhat-linux-8.id 
+  instance_type = "t2.medium"
+  key_name = var.private_key
+  vpc_security_group_ids  = [var.aws_security_group_instance]
+  user_data = <<EOF
+#!/bin/bash
+  echo "${var.puppetserver_private_ip}" puppet >> /etc/hosts
+  bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/setup_puppet_agent_red_hat.sh)
+  EOF
+  tags = {
+    Name = "postgres"
+  }
+}
+
+
+resource "aws_instance" "agent4" {
+  ami           = data.aws_ami.redhat-linux-8.id 
+  instance_type = "t2.medium"
+  key_name = var.private_key
+  vpc_security_group_ids  = [var.aws_security_group_instance]
+  user_data = <<EOF
+#!/bin/bash
+  echo "${var.puppetserver_private_ip}" puppet >> /etc/hosts
+  bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/setup_puppet_agent_red_hat.sh)
+  EOF
+  tags = {
     Name = "rundeck"
   }
+}
+
+  resource "aws_ec2_instance_state" "agent4" {
+    instance_id = aws_instance.agent1.id
+    state       = "stopped"
 }
 
 
