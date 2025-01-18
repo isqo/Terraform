@@ -4,6 +4,6 @@ sudo yum -y install puppet-agent
 
 sudo /opt/puppetlabs/bin/puppet --version
 
-sudo echo $(hostname -i) puppet >> /etc/hosts
+sudo echo 172.31.1.182 puppet >> /etc/hosts
 
 sudo /opt/puppetlabs/bin/puppet ssl bootstrap

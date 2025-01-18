@@ -43,7 +43,7 @@ resource "aws_instance" "puppetserver" {
   vpc_security_group_ids  = [var.aws_security_group_instance]
   user_data = <<EOF
 #!/bin/bash
-    bash <(curl -s  https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/run_puppetserver.sh)
+    bash <(curl -s  https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/setup_puppetserver.sh)
   EOF
   tags = {
     Name = "puppetserver"
@@ -52,4 +52,9 @@ resource "aws_instance" "puppetserver" {
 
 output "instance_ip_addr" {
   value = aws_instance.puppetserver.private_ip
+}
+
+resource "aws_ec2_instance_state" "puppetserver" {
+  instance_id = aws_instance.puppetserver.id
+  state       = "running"
 }
