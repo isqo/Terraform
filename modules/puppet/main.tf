@@ -67,7 +67,7 @@ resource "aws_instance" "agent1" {
 
 resource "aws_instance" "agent2" {
   ami           = data.aws_ami.redhat-linux-8.id 
-  instance_type = "t2.micro"
+  instance_type = "t2.medium"
   key_name = var.private_key
   vpc_security_group_ids  = [var.aws_security_group_instance]
   user_data = <<EOF
@@ -81,7 +81,7 @@ resource "aws_instance" "agent2" {
 }
 resource "aws_ec2_instance_state" "agent2" {
   instance_id = aws_instance.agent2.id
-  state       = "running"
+  state       = "stopped"
 }
 
 resource "aws_instance" "agent3" {
@@ -172,4 +172,28 @@ resource "aws_instance" "test" {
   tags = {
     Name = "test"
   }
+}
+  resource "aws_ec2_instance_state" "test" {
+  instance_id = aws_instance.test.id
+  state       = "stopped"
+}
+
+
+resource "aws_instance" "agent7" {
+  ami           = data.aws_ami.redhat-linux-8.id 
+  instance_type = "t2.medium"
+  key_name = var.private_key
+  vpc_security_group_ids  = [var.aws_security_group_instance]
+  user_data = <<EOF
+#!/bin/bash
+  echo "${var.puppetserver_private_ip}" puppet >> /etc/hosts
+  bash <(curl -s https://raw.githubusercontent.com/isqo/Terraform/refs/heads/main/userdata/setup_puppet_agent_red_hat.sh)
+  EOF
+  tags = {
+    Name = "Nexus"
+  }
+}
+resource "aws_ec2_instance_state" "agent7" {
+  instance_id = aws_instance.agent7.id
+  state       = "stopped"
 }

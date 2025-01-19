@@ -56,5 +56,5 @@ output "instance_ip_addr" {
 
 resource "aws_ec2_instance_state" "puppetserver" {
   instance_id = aws_instance.puppetserver.id
-  state       = "running"
+  state       = "stopped"
 }
